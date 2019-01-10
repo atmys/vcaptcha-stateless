@@ -40,7 +40,7 @@ const captcha = vCaptcha.create({
   userId: '192.168.1.30', // unique ID of your choice
   language: 'fr', // 'en' or 'fr'
   length: 5,
-  expiresIn: 60 * 2 // for 2 minutes
+  expiresIn: 60 // for 1 minute
 });
 
 // SOLVE CAPTCHA
