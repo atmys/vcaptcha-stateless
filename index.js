@@ -9,7 +9,7 @@ module.exports = function (options = {}) {
 
     function create({
         userId = '',
-        expiresIn = 60 * 2,
+        expiresIn = 60,
         language = 'en',
         length = 5,
         failCount = 0
