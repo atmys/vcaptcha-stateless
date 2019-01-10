@@ -1,4 +1,4 @@
-# vCAPTCHA-stateless
+# vCaptcha-stateless
 
 Simple but user-friendy Node.js stateless captcha generator, based on [vCAPTCHA](https://github.com/atmys/vcaptcha). It makes the user pick up 2 pictures (in sequence) among several (5 by default). Should be enough for low security forms.
 
