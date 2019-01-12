@@ -13,11 +13,12 @@ module.exports = function (options = {}) {
         language = 'en',
         length = 5,
         failCount = 0
-    }) {
+    } = {}) {
         const data = [],
             indexes = [],
             names = [],
             solution = [];
+        /* istanbul ignore next */
         while (data.length < length) {
             const x = Math.floor(Math.random() * pics.length);
             if (indexes.indexOf(x) === -1) {
@@ -25,6 +26,7 @@ module.exports = function (options = {}) {
                 data.push(pics[x].data);
             }
         }
+        /* istanbul ignore next */
         while (solution.length < 2) {
             const y = Math.floor(Math.random() * length);
             const z = indexes[y];
@@ -54,6 +56,7 @@ module.exports = function (options = {}) {
     }, callback = throwIfMissing('callback')) {
         const JSONSolution = isJSON(solution) ? solution : JSON.stringify(solution);
         jwt.verify(key, secret, function (err, decoded) {
+            /* istanbul ignore if */
             if (err) {
                 throw err
             }

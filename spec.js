@@ -1,5 +1,6 @@
 const maxFails = 5;
-const vCaptcha = require('./index')({
+const vCaptchaModule = require('./index');
+const vCaptcha = vCaptchaModule({
   secret: 'secret',
   maxFails: maxFails
 });
@@ -21,11 +22,11 @@ describe('when creating', () => {
   it('should fail if missing params', () => {
 
     expect(function () {
-      require('./index')({});
+      vCaptchaModule();
     }).toThrow();
 
     expect(function () {
-      vCaptcha.create();
+      vCaptchaModule({});
     }).toThrow();
 
   });
@@ -49,6 +50,11 @@ describe('when creating', () => {
     expect(captcha.phrase).toBe(phrases(expectedLanguage, captcha.names));
 
   });
+
+  it('should return captcha if no option provided as well', () => {
+    const captcha = vCaptcha.create();
+    expect(captcha.key).toBeDefined();
+  });
 });
 
 describe('when solving', () => {
@@ -57,6 +63,14 @@ describe('when solving', () => {
 
     expect(function () {
       vCaptcha.solve();
+    }).toThrow();
+
+    expect(function () {
+      vCaptcha.solve({});
+    }).toThrow();
+
+    expect(function () {
+      vCaptcha.solve({ key: 'key' });
     }).toThrow();
 
     expect(function () {
@@ -89,8 +103,39 @@ describe('when solving', () => {
     forceFail(solvedCaptcha, 0);
   });
 
+  it('should fail if wrong solution & return unlimited captcha if no userId', done => {
+    function forceFail(captcha, count) {
+      vCaptcha.solve({ key: captcha.key, solution: [0, 2] }, function (valid, newCaptcha) {
+        expect(valid).toBe(false);
+        if (count < maxFails * 2) {
+          forceFail(newCaptcha, count + 1);
+        } else {
+          expect(newCaptcha).toBeTruthy();
+          done();
+        }
+      });
+    }
+    forceFail(vCaptcha.create(), 0);
+  });
+
+  it('should fail if wrong JSON solution', done => {
+    vCaptcha.solve({ key: solvedCaptcha.key, solution: JSON.stringify([0, 2]) }, function (valid, newCaptcha) {
+      expect(valid).toBe(false);
+      expect(newCaptcha).toBeTruthy();
+      done();
+    });
+  });
+
   it('should succeed if right answer', done => {
     vCaptcha.solve({ key: solvedCaptcha.key, solution: [1, 0] }, function (valid, captcha) {
+      expect(valid).toBe(true);
+      expect(captcha).toBeUndefined();
+      done();
+    });
+  });
+
+  it('should succeed if right JSON answer', done => {
+    vCaptcha.solve({ key: solvedCaptcha.key, solution: JSON.stringify([1, 0]) }, function (valid, captcha) {
       expect(valid).toBe(true);
       expect(captcha).toBeUndefined();
       done();

@@ -26,35 +26,50 @@ All this data must be passed to the client. The key must be sent back to the ser
 npm i --save vcaptcha-stateless
 ```
 
-### Usage
+### API
+#### `require('vcaptcha')(options)`
+- Initialize vCaptcha
+- `options <Object>` 
+  - `secret` **Required:** JWT secret
+  - `maxFails` **Default:** 10 - max fails allowed per userId
+#### `create(options, callback)`
+- `options <Object>` 
+  - `userId` **Default:** ''
+  - `expiresIn` **Default:** 60 - seconds
+  - `language` **Default:** 'en' - also supported: 'fr'
+  - `length` **Default:** 5 - number of pictures to send to the client
+  - `failCount` **Default:** 0 - current fail count - set automatically
+- returns `{ key, data, names, phrase }`
+  - `captcha <Object>`
+    - `key` JWT token containing the captcha data
+    - `data` base64 pictures array
+    - `phrase` explanation to solve the captcha
+    - `names` pictures to find to solve the captcha, to create your own phrase
+  - `count` fail count
+#### `solve(options, callback)`
+- `options <Object>` 
+  - `key` **Required:** key of the captcha to solve
+  - `solution` **Required:** guessed solution provided by the client.
+- `callback <Function>` returns `(valid, newCaptcha)`
+  - `valid <Boolean>` whether or not captcha is solved
+  - `newCaptcha <Object>` if validation failed.
+
+### Example
+
+Try it on [RunKit](https://runkit.com/atmys/vcaptcha-stateless).
 
 ```js
-// INITIALIZE
-const vCaptcha = require('vcaptcha')({ 
-  secret: 'secret',
-  maxFails: 10
+const vCaptcha = require('vcaptcha-stateless')({ 
+  secret: 'secret'
 });
 
-// CREATE A NEW CAPTCHA
-const captcha = vCaptcha.create({
-  userId: '192.168.1.30', // unique ID of your choice
-  language: 'fr', // 'en' or 'fr'
-  length: 5,
-  expiresIn: 60 // for 1 minute
-});
+const captcha = vCaptcha.create();
 
-// SOLVE CAPTCHA
 vCaptcha.solve({
-  key: body.key,
-  solution: body.solution
-}, (valid, captcha) => {
-  if (valid) {
-    // user completed the captcha
-    // captcha = undefined
-  } else {
-    // if maxFails is not reached, captcha = a new captcha
-    // if maxFails is reached, captcha = null
-  }
+  key: captcha.key,
+  solution: captcha.solution
+}, (valid, newCaptcha) => {
+  // if (valid) newCaptcha = undefined
 });
 ```
 
