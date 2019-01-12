@@ -105,7 +105,7 @@ describe('when solving', () => {
 
   it('should fail if wrong solution & return unlimited captcha if no userId', done => {
     function forceFail(captcha, count) {
-      vCaptcha.solve({ key: captcha.key, solution: [0, 2] }, function (valid, newCaptcha) {
+      vCaptcha.solve({ key: captcha.key, solution: [0, 15] }, function (valid, newCaptcha) {
         expect(valid).toBe(false);
         if (count < maxFails * 2) {
           forceFail(newCaptcha, count + 1);

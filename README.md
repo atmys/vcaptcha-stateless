@@ -1,5 +1,8 @@
 # vCaptcha-stateless
 
+[![Known Vulnerabilities](https://snyk.io/test/github/atmys/vcaptcha-stateless/badge.svg?targetFile=package.json)](https://snyk.io/test/github/atmys/vcaptcha-stateless?targetFile=package.json)
+[![codebeat badge](https://codebeat.co/badges/07d42dde-a515-46b1-a63c-901dae71ac14)](https://codebeat.co/projects/github-com-atmys-vcaptcha-stateless-master)
+
 Simple but user-friendy Node.js stateless captcha generator, based on [vCAPTCHA](https://github.com/atmys/vcaptcha). It makes the user pick up 2 pictures (in sequence) among several (5 by default). Should be enough for low security forms.
 
 WARNING : this stateless version can only be used if captcha requests are somehow limited, for example with nginx or iptables, and the request rate must match the expiresIn parameter you provide. Otherwise, the client will be able to use the same captcha over and over, making it useless. To avoid this, please use the original stateful version of [vCAPTCHA](https://github.com/atmys/vcaptcha).
