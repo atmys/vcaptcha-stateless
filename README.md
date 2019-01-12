@@ -1,5 +1,7 @@
 # vCaptcha-stateless
 
+[![Build Status](https://travis-ci.org/atmys/vcaptcha-stateless.svg?branch=master)](https://travis-ci.org/atmys/vcaptcha-stateless)
+[![Coverage Status](https://coveralls.io/repos/github/atmys/vcaptcha-stateless/badge.svg?branch=master)](https://coveralls.io/github/atmys/vcaptcha-stateless?branch=master)
 [![Known Vulnerabilities](https://snyk.io/test/github/atmys/vcaptcha-stateless/badge.svg?targetFile=package.json)](https://snyk.io/test/github/atmys/vcaptcha-stateless?targetFile=package.json)
 [![codebeat badge](https://codebeat.co/badges/07d42dde-a515-46b1-a63c-901dae71ac14)](https://codebeat.co/projects/github-com-atmys-vcaptcha-stateless-master)
 
