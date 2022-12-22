@@ -20,7 +20,7 @@
   "author": "Romain Mougel",
   "license": "MIT",
   "dependencies": {
-    "jsonwebtoken": "^8.4.0"
+    "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
     "coveralls": "^3.0.2",
